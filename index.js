@@ -6,6 +6,8 @@ const fetch = require('node-fetch');
 
 dotenv.config();
 
+const PORT = process.env.PORT || 3000;
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -252,7 +254,6 @@ function processTokenHolderUpdates(newHolders) {
   }
 }
 
-const PORT = 3000; // Changed port to avoid conflict with frontend
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
