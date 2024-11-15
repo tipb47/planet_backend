@@ -38,12 +38,18 @@ async function pumpStats() {
   const url = `https://frontend-api.pump.fun/coins/${tokenMintAddress}`;
   try {
     const response = await fetch(url);
+    if (!response.ok) {
+      console.error(`API responded with status: ${response.status}`);
+      const errorBody = await response.text();
+      console.error(`Error body: ${errorBody}`);
+      return null;
+    }
     const data = await response.json();
+    console.log(data);
     if (data.bonding_curve) {
       console.log(`Fetched bonding curve address: ${data.bonding_curve}`);
       console.log(`Fetched Dev Addy: ${data.creator}`);
       console.log(`Fetched Twitter and CA: ${data.mint} ${data.twitter}`);
-      // Store token details globally
       tokenDetails = {
         bondingCurveAddress: data.bonding_curve,
         creator: data.creator,
@@ -60,6 +66,7 @@ async function pumpStats() {
     return null;
   }
 }
+
 
 // Get the bonding curve address and other details from the API
 async function pump() {
