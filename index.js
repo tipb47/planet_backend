@@ -13,7 +13,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   path: '/ws',
   cors: {
-    origin: 'http://localhost:3000', // Adjust if your frontend runs on a different origin
+    origin: 'https://floweraigarden.netlify.app/:3000', // Adjust if your frontend runs on a different origin
     methods: ['GET', 'POST'],
   },
   transports: ['websocket'], // Force WebSocket transport
