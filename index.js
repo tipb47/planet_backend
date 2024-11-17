@@ -114,7 +114,7 @@ initializePumpData().then(() => {
   }
 
   // Set up the periodic fetch
-  setInterval(() => updateTokenHolders(bondingCurveAddress), 15000); // 5 seconds
+  setInterval(() => updateTokenHolders(bondingCurveAddress), 5000); // 5 seconds
 
   // Initial fetch to populate holders on startup
   updateTokenHolders(bondingCurveAddress);
