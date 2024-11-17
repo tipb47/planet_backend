@@ -223,6 +223,12 @@ function processTokenHolderUpdates(newHolders) {
   const updated = [];
   const removed = [];
 
+  // newHolders and tokenHolders get compared. if newHolders is significantly lower than tokenHolders (meaning there was a pagination issue in the fetching of newHolders, lets say for example if we have 12000 in tokenHolders.length and newHolders.length is 11000, we have a problem. use ratios so this works at any holder count. since we fetch results in pages of 1000, assume that at any time during a fetch, it could fail.)
+  if (newHolders.length / tokenHolders.length < 0.95) {
+    console.error("Pagination issue detected.");
+    return
+  }
+
   // Check for added or updated holders
   newHolders.forEach((newHolder, address) => {
     const oldHolder = tokenHolders.get(address);
