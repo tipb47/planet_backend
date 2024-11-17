@@ -1,1 +1,1 @@
-web: node index.js CNT1cbvCxBev8WTjmrhKxXFFfnXzBxoaZSNkhKwtpump
+web: node index.js $START_PARAM
