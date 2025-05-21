@@ -23,7 +23,7 @@ let tokenHolders = new Map(); // Map to store holders with aggregated balances
 let TOKEN_DECIMALS = 6; // Default value, will be updated on startup
 
 // Get token mint address from command line or environment variable
-const tokenMintAddress = process.argv[2] || process.env.TOKEN_MINT_ADDRESS;
+const tokenMintAddress = process.argv[2];
 if (!tokenMintAddress) {
   console.error('Error: Token mint address not provided. Specify as argument or in .env.');
   process.exit(1);
