@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test</title>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>WebSocket Test</h1>
+    <p>Open your browser's developer console to see messages from the server.</p>
+    <div id="data">
+        <h2>Holders:</h2>
+        <pre id="holders-data"></pre>
+        <h2>Contract Address:</h2>
+        <pre id="contract-address-data"></pre>
+        <h2>Updates:</h2>
+        <div id="updates-log"></div>
+    </div>
+
+    <script>
+        // Ensure this matches the origin in your backend's CORS configuration if different
+        const socket = io('http://localhost:4000', {
+            path: '/ws',
+            transports: ['websocket'] // Important to match server config
+        });
+
+        const holdersDataEl = document.getElementById('holders-data');
+        const contractAddressDataEl = document.getElementById('contract-address-data');
+        const updatesLogEl = document.getElementById('updates-log');
+
+        function logMessage(message) {
+            const p = document.createElement('p');
+            p.textContent = message;
+            updatesLogEl.appendChild(p);
+            console.log(message); // Keep console logging as well
+        }
+
+        socket.on('connect', () => {
+            logMessage('Connected to WebSocket server: ' + socket.id);
+        });
+
+        socket.on('initial_data', (data) => {
+            logMessage('Received initial_data:');
+            console.log(data); // Log the full data object to console
+            holdersDataEl.textContent = JSON.stringify(data.holders, null, 2);
+            contractAddressDataEl.textContent = data.contractAddress;
+        });
+
+        socket.on('update', (data) => {
+            logMessage('Received update:');
+            console.log(data); // Log the full data object to console
+            
+            if (data.added && data.added.length > 0) {
+                logMessage('Added: ' + JSON.stringify(data.added, null, 2));
+            }
+            if (data.updated && data.updated.length > 0) {
+                logMessage('Updated: ' + JSON.stringify(data.updated, null, 2));
+            }
+            if (data.removed && data.removed.length > 0) {
+                logMessage('Removed: ' + JSON.stringify(data.removed, null, 2));
+            }
+            // For a real app, you would update the holdersDataEl content here by
+            // finding existing entries, updating them, adding new ones, and removing old ones.
+            // For this test, we're just logging to the console and the updates-log div.
+        });
+
+        socket.on('disconnect', () => {
+            logMessage('Disconnected from WebSocket server');
+        });
+
+        socket.on('connect_error', (error) => {
+            logMessage('Connection Error: ' + error);
+            console.error('Connection Error:', error); // Keep detailed error in console
+        });
+    </script>
+</body>
+</html> 
