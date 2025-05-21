@@ -79,7 +79,7 @@ async function fetchTokenDecimals() {
 }
 
 // Set up the periodic fetch
-setInterval(() => updateTokenHolders(), 5000); // Every minute
+setInterval(() => updateTokenHolders(), 60000); // Every minute
 
 // Initial fetch to populate holders on startup and fetch decimals
 async function initialize() {

@@ -20,7 +20,7 @@
 
     <script>
         // Ensure this matches the origin in your backend's CORS configuration if different
-        const socket = io('http://localhost:4000', {
+        const socket = io('https://planet-backend2323-2904227a7f14.herokuapp.com/', {
             path: '/ws',
             transports: ['websocket'] // Important to match server config
         });
