@@ -7,7 +7,7 @@ const fetch = require('node-fetch');
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
-const DELAY = 5 //in seconds
+const DELAY = 250 //in seconds
 const delayMS = DELAY * 1000
 
 const app = express();
