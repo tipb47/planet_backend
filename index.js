@@ -7,6 +7,8 @@ const fetch = require('node-fetch');
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
+const DELAY = 5 //in seconds
+const delayMS = DELAY * 1000
 
 const app = express();
 const server = http.createServer(app);
@@ -79,7 +81,7 @@ async function fetchTokenDecimals() {
 }
 
 // Set up the periodic fetch
-setInterval(() => updateTokenHolders(), 300000); // Every 5 minutes
+setInterval(() => updateTokenHolders(), delayMS);
 
 // Initial fetch to populate holders on startup and fetch decimals
 async function initialize() {
